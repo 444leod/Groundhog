@@ -38,10 +38,19 @@ parseArgsWithNone = do
         handler (ExitFailure n) = return n
         handler _ = return 0
 
-parseArgsBadValue :: IO Test
-parseArgsBadValue = do
+parseArgsWithString :: IO Test
+parseArgsWithString = do
     result <- catch (parseArgs ["Foo"]) handler
     return $ TestCase $ assertEqual "parseArgs Foo exit" 84 result
+    where
+        handler :: ExitCode -> IO Int
+        handler (ExitFailure n) = return n
+        handler _ = return 0
+
+parseArgsNegativeInt :: IO Test
+parseArgsNegativeInt = do
+    result <- catch (parseArgs ["-1"]) handler
+    return $ TestCase $ assertEqual "parseArgs -1 exit" 84 result
     where
         handler :: ExitCode -> IO Int
         handler (ExitFailure n) = return n
@@ -52,10 +61,12 @@ parseArgsTests = do
     onePosInt <- parseArgsTakesOnePosInt
     withMany <- parseArgsWithMany
     none <- parseArgsWithNone
-    badValue <- parseArgsBadValue
+    withString <- parseArgsWithString
+    negative <- parseArgsNegativeInt
     return $ TestList [
         TestLabel "One positive int" onePosInt,
         TestLabel "With many args" withMany,
         TestLabel "With no arg" none,
-        TestLabel "A string" badValue
+        TestLabel "A string" withString,
+        TestLabel "Negative number" negative
         ]
