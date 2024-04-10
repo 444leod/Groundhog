@@ -3,7 +3,7 @@ name: PROJECT_NAME
 on: [push, pull_request]
 
 env:
-  MIRROR_URL: ""
+  MIRROR_URL: "git@github.com:EpitechPromo2027/B-CNA-410-LIL-4-1-groundhog-leo.dumont.git"
 
 jobs:
   build:
