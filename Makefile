@@ -9,7 +9,8 @@ NAME	=	groundhog
 PROJECT		=	Groundhog
 
 all:
-	@stack build --allow-different-user
+	@TAR_OPTIONS=--no-same-owner stack setup
+	@stack build
 	@cp $(shell stack path --local-install-root)/bin/$(PROJECT)-exe $(NAME)
 
 clean:
