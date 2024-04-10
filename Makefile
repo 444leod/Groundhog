@@ -12,6 +12,9 @@ all:
 	@stack build --allow-different-user
 	@cp $(shell stack path --local-install-root)/bin/$(PROJECT)-exe $(NAME)
 
+tests_run:
+	@stack test
+
 clean:
 
 fclean: clean
