@@ -18,6 +18,7 @@ jobs:
       - name: Test Makefile rules
         timeout-minutes: 2
         run: |
+          mkdir /github/home/.stack/
           make
           make re
           make clean
