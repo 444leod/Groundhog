@@ -9,7 +9,7 @@ jobs:
   build:
     name: Test compilations
     runs-on: ubuntu-latest
-    container: epitechcontent/epitest-docker:latest
+    container: haskell:latest
 
     steps:
       - name: Checkout repository
@@ -26,7 +26,7 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
-    container: epitechcontent/epitest-docker:latest
+    container: haskell:latest
 
     steps:
       - name: Checkout repository

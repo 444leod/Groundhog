@@ -13,6 +13,9 @@ all:
 	@stack build
 	@cp $(shell stack path --local-install-root)/bin/$(PROJECT)-exe $(NAME)
 
+tests_run:
+	stack build --test --coverage
+
 clean:
 
 fclean: clean
