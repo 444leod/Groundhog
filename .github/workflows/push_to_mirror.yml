@@ -1,4 +1,4 @@
-name: PROJECT_NAME
+name: Groundhog
 
 on: [push, pull_request]
 
