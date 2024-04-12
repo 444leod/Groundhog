@@ -6,7 +6,8 @@
 -}
 
 module Input (
-    getInput
+    getInput,
+    parseInput
 ) where
 
 import System.IO (hPutStrLn, stderr)
