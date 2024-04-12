@@ -1,3 +1,10 @@
+{-
+-- EPITECH PROJECT, 2024
+-- Groundhog
+-- File description:
+-- Main
+-}
+
 module Main (main) where
 
 import Input

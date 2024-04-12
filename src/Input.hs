@@ -1,9 +1,9 @@
---
+{-
 -- EPITECH PROJECT, 2024
 -- BsGroundhog
 -- File description:
 -- Input
---
+-}
 
 module Input (
     getInput
@@ -24,5 +24,6 @@ parseInput s = getDouble (readMaybe s :: Maybe Double)
 
 getInput :: IO Double
 getInput = do
-    s <- catch (getLine) ((\_ -> exitWith (ExitFailure 84)) :: IOException -> IO String)
+    s <- catch (getLine) ((\_ ->
+        exitWith (ExitFailure 84)) :: IOException -> IO String)
     parseInput s
