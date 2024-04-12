@@ -1,9 +1,9 @@
---
+{-
 -- EPITECH PROJECT, 2024
 -- BsGroundhog
 -- File description:
 -- Parameters
---
+-}
 
 module Parameters (
     getPeriod,
