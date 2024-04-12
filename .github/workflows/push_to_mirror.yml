@@ -15,9 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup stack
+        run: mkdir /github/home/.stack/
+
       - name: Test Makefile rules
         run: |
-          mkdir /github/home/.stack/
           make
           make re
           make clean
@@ -31,6 +33,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup stack
+        run: mkdir /github/home/.stack/
 
       - name: Run tests
         timeout-minutes: 2
