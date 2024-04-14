@@ -46,3 +46,15 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - Groundhog
+
+tests:
+  Groundhog-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Groundhog
+    - HUnit

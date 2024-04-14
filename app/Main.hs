@@ -9,7 +9,7 @@ module Main (main) where
 
 import Input
 import Output
-import Parameters
+import Parameters (getPeriod)
 
 appendInput :: [Double] -> IO [Double]
 appendInput l = do
