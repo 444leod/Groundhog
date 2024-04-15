@@ -88,17 +88,17 @@ parseInputMany = do
 
 avgIncOneStep :: Test
 avgIncOneStep = TestCase $
-    assertEqual "avgTempIncreases 3 [4, 3, 2, 1]" (Just 1.0) result
+    assertEqual "avgTempIncreases 3 [4, 3, 2, 1, 0]" (Just 1.0) result
     where result = avgTempIncreases 3 [4.0, 3.0, 2.0, 1.0]
 
 avgIncDifferentSteps :: Test
 avgIncDifferentSteps = TestCase $
-    assertEqual "avgTempIncreases 3 [7, 4, 2, 1]" (Just 2.5) result
+    assertEqual "avgTempIncreases 3 [7, 4, 2, 1, 0]" (Just 2.0) result
     where result = avgTempIncreases 3 [7.0, 4.0, 2.0, 1.0]
 
 avgIncNotEnoughData :: Test
 avgIncNotEnoughData = TestCase $
-    assertEqual "avgTempIncreases 6 [7, 4, 2, 1]" Nothing result
+    assertEqual "avgTempIncreases 6 [7, 4, 2, 1, 0]" Nothing result
     where result = avgTempIncreases 6 [7.0, 4.0, 2.0, 1.0]
 
 parseArgsTests :: IO Test
