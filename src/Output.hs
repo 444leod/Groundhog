@@ -6,24 +6,17 @@
 -}
 
 module Output (
-    output
+    avgTempIncreases
 ) where
 
--- Temperature Increase Average
-tempIncreases :: Int -> [Double] -> [Double]
-tempIncreases _ [] = []
-tempIncreases _ [_] = []
-tempIncreases 0 _ = []
-tempIncreases s (x:y:xs)
-    | x >= y = (x - y) : (tempIncreases (s - 1) $ y:xs)
-    | otherwise = tempIncreases (s - 1) $ y:xs
+positiveElevations :: [Double] -> [Double]
+positiveElevations [] = []
+positiveElevations [_] = []
+positiveElevations (x:y:xs)
+    | x > y = (x - y):rest
+    | otherwise = 0:rest
+    where rest = positiveElevations (y:xs)
 
-daverage :: [Double] -> Double
-daverage l = (foldl (+) 0.0 l) / (fromIntegral $ length l)
-
-printTAIs :: Int -> [Double] -> IO ()
-printTAIs p l = print $ daverage increases
-    where increases = tempIncreases p l
-
-output :: Int -> [Double] -> IO ()
-output p l = printTAIs p l
+avgTempIncreases :: Int -> [Double] -> Double
+avgTempIncreases period temps = (sum incs) / (fromIntegral $ length incs)
+    where incs = positiveElevations $ take period temps
