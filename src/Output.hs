@@ -6,6 +6,7 @@
 -}
 
 module Output (
+    output,
     avgTempIncreases
 ) where
 
@@ -17,6 +18,18 @@ positiveElevations (x:y:xs)
     | otherwise = 0:rest
     where rest = positiveElevations (y:xs)
 
-avgTempIncreases :: Int -> [Double] -> Double
-avgTempIncreases period temps = (sum incs) / (fromIntegral $ length incs)
+avgTempIncreases :: Int -> [Double] -> Maybe Double
+avgTempIncreases period temps
+    | period - 1 > length incs = Nothing
+    | otherwise = Just $ (sum incs) / (fromIntegral $ length incs)
     where incs = positiveElevations $ take period temps
+
+display :: [Maybe Double] -> IO ()
+display [] = putStrLn ""
+display [x] = print x >> putStrLn ""
+display (x:xs) = print x >> putStr "\t" >> display (xs)
+
+output :: Int -> [Double] -> IO ()
+output period temps = do
+    let increase = avgTempIncreases period temps
+    display [increase]
