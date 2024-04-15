@@ -10,6 +10,8 @@ module Output (
     avgTempIncreases
 ) where
 
+import Text.Printf
+
 positiveElevations :: [Double] -> [Double]
 positiveElevations [] = []
 positiveElevations [_] = []
@@ -20,16 +22,15 @@ positiveElevations (x:y:xs)
 
 avgTempIncreases :: Int -> [Double] -> Maybe Double
 avgTempIncreases period temps
-    | period - 1 > length incs = Nothing
+    | period > length incs = Nothing
     | otherwise = Just $ (sum incs) / (fromIntegral $ length incs)
-    where incs = positiveElevations $ take period temps
+    where incs = positiveElevations $ take (period + 1) temps
 
-display :: [Maybe Double] -> IO ()
-display [] = putStrLn ""
-display [x] = print x >> putStrLn ""
-display (x:xs) = print x >> putStr "\t" >> display (xs)
+displayValue :: String -> Maybe Double -> String -> IO ()
+displayValue pre Nothing suf = printf "%s=nan%s" pre suf
+displayValue pre (Just v) suf = printf "%s=%.2f%s" pre v suf
 
 output :: Int -> [Double] -> IO ()
 output period temps = do
     let increase = avgTempIncreases period temps
-    display [increase]
+    displayValue "g" increase "" >> putStrLn ""
