@@ -26,6 +26,12 @@ avgTempIncreases period temps
     | otherwise = Just $ (sum incs) / (fromIntegral $ length incs)
     where incs = positiveElevations $ take (period + 1) temps
 
+relativeEvolution :: Int -> [Double] -> Maybe Int
+relativeEvolution period temps
+    | period >= length temps = Nothing
+    | otherwise = Just $ (round :: Double -> Int) $
+        (head temps / (temps !! period) - 1) * 100
+
 displayDoubleValue :: String -> Maybe Double -> IO ()
 displayDoubleValue pre Nothing = printf "%s=nan" pre
 displayDoubleValue pre (Just v) = printf "%s=%.2f" pre v
@@ -38,7 +44,8 @@ output :: Int -> [Double] -> IO ()
 output period temps =
     let
         increase = avgTempIncreases period temps
+        evolution = relativeEvolution period temps
     in
     displayDoubleValue "g" increase >> putStr "\t" >>
-    displayPercValue "r" Nothing >> putStr "\t" >>
+    displayPercValue "r" evolution >> putStr "\t" >>
     displayDoubleValue "s" increase >> putStrLn ""
