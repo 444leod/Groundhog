@@ -26,16 +26,19 @@ avgTempIncreases period temps
     | otherwise = Just $ (sum incs) / (fromIntegral $ length incs)
     where incs = positiveElevations $ take (period + 1) temps
 
-displayValue :: String -> Maybe Double -> String -> IO ()
-displayValue pre Nothing suf = printf "%s=nan%s" pre suf
-displayValue pre (Just v) suf = printf "%s=%.2f%s" pre v suf
+displayDoubleValue :: String -> Maybe Double -> IO ()
+displayDoubleValue pre Nothing = printf "%s=nan" pre
+displayDoubleValue pre (Just v) = printf "%s=%.2f" pre v
+
+displayPercValue :: String -> Maybe Int -> IO ()
+displayPercValue pre Nothing = printf "%s=nan%%" pre
+displayPercValue pre (Just v) = printf "%s=%d%%" pre v
 
 output :: Int -> [Double] -> IO ()
 output period temps =
     let
         increase = avgTempIncreases period temps
     in
-    displayValue "g" increase "" >>
-    displayValue "r" increase "" >>
-    displayValue "s" increase "" >>
-    putStrLn ""
+    displayDoubleValue "g" increase >> putStr "\t" >>
+    displayPercValue "r" Nothing >> putStr "\t" >>
+    displayDoubleValue "s" increase >> putStrLn ""
