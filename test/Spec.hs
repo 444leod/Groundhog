@@ -8,6 +8,7 @@
 import Test.HUnit
 import Parameters (parseArgs)
 import Input (parseInput)
+import Output (avgTempIncreases)
 import Control.Exception (catch)
 import System.Exit (ExitCode(..))
 
@@ -85,6 +86,21 @@ parseInputMany = do
         handler (ExitFailure 84) = return 0
         handler _ = return $ -1
 
+avgIncOneStep :: Test
+avgIncOneStep = TestCase $
+    assertEqual "avgTempIncreases 3 [4, 3, 2, 1, 0]" (Just 1.0) result
+    where result = avgTempIncreases 3 [4.0, 3.0, 2.0, 1.0]
+
+avgIncDifferentSteps :: Test
+avgIncDifferentSteps = TestCase $
+    assertEqual "avgTempIncreases 3 [7, 4, 2, 1, 0]" (Just 2.0) result
+    where result = avgTempIncreases 3 [7.0, 4.0, 2.0, 1.0]
+
+avgIncNotEnoughData :: Test
+avgIncNotEnoughData = TestCase $
+    assertEqual "avgTempIncreases 6 [7, 4, 2, 1, 0]" Nothing result
+    where result = avgTempIncreases 6 [7.0, 4.0, 2.0, 1.0]
+
 parseArgsTests :: IO Test
 parseArgsTests = do
     onePosInt <- parseArgsTakesOnePosInt
@@ -113,11 +129,19 @@ parseInputTests = do
         TestLabel "Many numbers" many
         ]
 
+outputTests :: Test
+outputTests = TestList [
+        TestLabel "avgInc 1" avgIncOneStep,
+        TestLabel "avgInc 2" avgIncDifferentSteps,
+        TestLabel "avgInc not enough data" avgIncNotEnoughData
+        ]
+
 testSuites :: IO Test
 testSuites = do
     args <- parseArgsTests
     input <- parseInputTests
     return $ TestList [
         TestLabel "Args" args,
-        TestLabel "Input" input
+        TestLabel "Input" input,
+        TestLabel "Output" outputTests
         ]
