@@ -31,6 +31,11 @@ displayValue pre Nothing suf = printf "%s=nan%s" pre suf
 displayValue pre (Just v) suf = printf "%s=%.2f%s" pre v suf
 
 output :: Int -> [Double] -> IO ()
-output period temps = do
-    let increase = avgTempIncreases period temps
-    displayValue "g" increase "" >> putStrLn ""
+output period temps =
+    let
+        increase = avgTempIncreases period temps
+    in
+    displayValue "g" increase "" >>
+    displayValue "r" increase "" >>
+    displayValue "s" increase "" >>
+    putStrLn ""
